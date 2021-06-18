@@ -1,0 +1,35 @@
+{
+  "name": "ms_teams_clone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lipijain2/ms_teams_clone.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lipijain2/ms_teams_clone/issues"
+  },
+  "homepage": "https://github.com/lipijain2/ms_teams_clone#readme",
+  "dependencies": {
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7",
+    "react-copy-to-clipboard": "^5.0.3",
+    "simple-peer": "^9.11.0",
+    "socket.io": "^4.1.2",
+    "socket.io-client": "^4.1.2"
+  },
+  "devDependencies": {
+    "@types/react-dom": "^17.0.7",
+    "eslint-plugin-react-hooks": "^4.2.0"
+  }
+}
