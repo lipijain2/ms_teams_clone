@@ -1,4 +1,4 @@
- import React, { createContext, useState, useRef, useEffect } from 'react';
+import React, { createContext, useState, useRef, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import Peer from 'simple-peer';
 
@@ -18,6 +18,26 @@ const ContextProvider = ({ children }) => {
   const userVideo = useRef();
   const connectionRef = useRef();
 
+  let micSwitch = true;
+  let videoSwitch = true;
+  
+  function toggleVideo(){
+    if(stream != null && stream.getVideoTracks().length > 0){
+      videoSwitch = !videoSwitch;
+      
+      stream.getVideoTracks()[0].enabled = videoSwitch;
+    }
+  
+  }
+  
+  function toggleMic(){
+    if(stream != null && stream.getAudioTracks().length > 0){
+      micSwitch = !micSwitch;
+  
+      stream.getAudioTracks()[0].enabled = micSwitch;
+    }  
+  }
+  
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({ video: true, audio: true })
       .then((currentStream) => {
@@ -73,11 +93,15 @@ const ContextProvider = ({ children }) => {
 
   const leaveCall = () => {
     setCallEnded(true);
-
+    
     connectionRef.current.destroy();
-
     window.location.reload();
+    
   };
+
+  const declineCall = () => {
+    window.location.reload();
+  }
 
   return (
     <SocketContext.Provider value={{
@@ -93,6 +117,11 @@ const ContextProvider = ({ children }) => {
       callUser,
       leaveCall,
       answerCall,
+      toggleVideo,
+      toggleMic,
+      micSwitch,
+      videoSwitch,
+      declineCall
     }}>
       {children}
     </SocketContext.Provider>
