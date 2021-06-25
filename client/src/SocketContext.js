@@ -14,12 +14,31 @@ const ContextProvider = ({ children }) => {
   const [call, setCall] = useState({});
   const [me, setMe] = useState('');
 
-  const myVideo = useRef();
-  const userVideo = useRef();
+  let myVideo = useRef();
+  let userVideo = useRef();
+  const userStream = useRef();
   const connectionRef = useRef();
 
   let micSwitch = true;
   let videoSwitch = true;
+
+  function shareScreen() {
+    stream.removeTrack(stream.getVideoTracks()[0]);
+    navigator.mediaDevices.getDisplayMedia({ cursor: true }).then(stream => {
+        const screenTrack = stream.getTracks()[0];
+        stream.current = screenTrack;
+        myVideo.current.srcObject = stream;
+        screenTrack.onended = function() {
+          navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+          .then((currentStream) => {
+            setStream(currentStream);
+    
+            myVideo.current.srcObject = currentStream;
+            userStream.current = currentStream;
+          });
+        }
+    })
+  }
   
   function toggleVideo(){
     if(stream != null && stream.getVideoTracks().length > 0){
@@ -63,7 +82,13 @@ const ContextProvider = ({ children }) => {
     });
 
     peer.on('stream', (currentStream) => {
-      userVideo.current.srcObject = currentStream;
+      if(currentStream.getTracks().length>0){
+        const screenTrack = currentStream.getTracks()[0];
+        currentStream.current = screenTrack;
+        userVideo.current.srcObject = currentStream;
+      } else {
+        userVideo.current.srcObject = currentStream;
+      }
     });
 
     peer.signal(call.signal);
@@ -121,7 +146,8 @@ const ContextProvider = ({ children }) => {
       toggleMic,
       micSwitch,
       videoSwitch,
-      declineCall
+      declineCall,
+      shareScreen
     }}>
       {children}
     </SocketContext.Provider>
