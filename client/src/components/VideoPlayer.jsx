@@ -12,10 +12,14 @@ const useStyles = makeStyles((theme) => ({
       },
     },
     gridContainer: {
+      display: 'flex',
+      position: 'fixed',
+      top: '100px',
       justifyContent: 'center',
       [theme.breakpoints.down('xs')]: {
         flexDirection: 'column',
       },
+      margin: '20px',
     },
     paper: {
       padding: '10px',
@@ -33,8 +37,10 @@ const VideoPlayer = () => {
         <Grid container className={classes.gridContainer}>
             {stream && (
                 <Paper className={classes.paper}>
-                    <Grid item xs={12} md={6}>
-                      <Typography variant="h5" gutterBottom>{ name || 'Name' }</Typography>
+                    <Grid item>
+                      <center>
+                        <Typography style={{ fontFamily: 'Courgette', textAlign: 'center', midWidth: '0'}} variant="h5" gutterBottom>{ name || 'Name' }</Typography>
+                      </center>
                       <video playsInline muted ref={myVideo} autoPlay className={classes.video} />
                     </Grid>
                 </Paper>
@@ -43,9 +49,11 @@ const VideoPlayer = () => {
             
             {callAccepted && !callEnded && (
                 <Paper className={classes.paper}>
-                    <Grid item xs={12} md={6}>
-                        <Typography variant="h5" gutterBottom>{ call.name || 'Name' }</Typography>
-                        <video playsInline ref={userVideo} autoPlay className={classes.video} />
+                    <Grid item>
+                      <center>
+                        <Typography style={{ fontFamily: 'Courgette' }} variant="h5" gutterBottom>{ call.name || 'Unknown' }</Typography>
+                      </center>  
+                      <video playsInline ref={userVideo} autoPlay className={classes.video} />
                     </Grid>
                 </Paper>
                 )

@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { AppBar } from '@material-ui/core';
 import { Button, TextField, Grid, Typography, Container, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -18,11 +19,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   container: {
-    width: '600px',
-    margin: '35px 0',
+    width: '100%',
+    margin: '0',
     padding: 0,
     [theme.breakpoints.down('xs')]: {
-      width: '80%',
+      width: '100%',
     },
   },
   margin: {
@@ -45,10 +46,13 @@ const Options = ( { children } ) => {
   return (
     <Container className={classes.container}>
       <Paper elevation={10} className={classes.paper}>
+      <AppBar className={classes.appBar} position="static" color="inherit">
+        <Typography style= {{ fontFamily: 'Courgette', backgroundColor: '#212121', color: '#FFFFFF'}} variant="h3" align="center">ChatMate</Typography>
+      </AppBar>
         <form className={classes.root} noValidate autoComplete="off">
           <Grid container className={classes.gridContainer}>
-            <Grid item xs={12} md={6} className={classes.padding}>
-              <Typography gutterBottom variant="h6">Account Info</Typography>
+            <Grid item className={classes.padding}>
+              <Typography style= {{ display: "inline-block", padding: "10px", backgroundColor: '#212121', color: '#FFFFFF'}} gutterBottom variant="h6">Account Info</Typography>
               <TextField label="Name" value={name} onChange={(e) => setName(e.target.value)} fullWidth />
               <CopyToClipboard text={me} className={classes.margin}>
                 <Button variant="contained" color="primary" fullWidth startIcon={<Assignment />}>
@@ -57,15 +61,15 @@ const Options = ( { children } ) => {
               </CopyToClipboard>
             </Grid>
 
-            <Grid item xs={12} md={6} className={classes.padding}>
-              <Typography gutterBottom variant="h6">Make a Call</Typography>
+            <Grid item className={classes.padding}>
+              <Typography style= {{ display: "inline-block", padding: "10px", backgroundColor: '#212121', color: '#FFFFFF'}} gutterBottom variant="h6">Make a Call</Typography>
               <TextField label="ID to Call" value={idToCall} onChange={(e) => setIdToCall(e.target.value)} fullWidth />
               {!callEnded && callAccepted ? (
-                <Button variant="contained" style={{backgroundColor: '#4caf50', color: '#FFFFFF'}}  fullWidth className={classes.margin}>
+                <Button variant="contained" style={{backgroundColor: '#388e3c', color: '#FFFFFF'}}  fullWidth className={classes.margin}>
                   Connected
                 </Button>
               ) : (
-                <Button  variant="contained" color="primary" startIcon={<Phone fontSize="large" />} fullWidth onClick={() => callUser(idToCall)} className={classes.margin}>
+                <Button  variant="contained" style={{backgroundColor: '#388e3c', color: '#FFFFFF'}} startIcon={<Phone fontSize="large" />} fullWidth onClick={() => callUser(idToCall)} className={classes.margin}>
                   Call
                 </Button>
               )}
