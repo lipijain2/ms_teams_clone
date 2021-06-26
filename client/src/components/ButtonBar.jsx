@@ -1,44 +1,28 @@
 import React, { useContext, useState } from 'react';
 import Pop from './Pop';
-import './PopUpStyles.css';
 import { Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import { Mic, Videocam, MicOff, VideocamOff, PhoneDisabled, ScreenShare, Info, Chat } from '@material-ui/icons';
 
 import { SocketContext } from '../SocketContext';
 
-const useStyles = makeStyles((theme) => ({
-  footer: {
-    bottom: '0',
-    padding: '10px 0px',
-    position: 'fixed',
-    width: '100%',
-    alignItems: 'center',
-    textAlign: 'center',
-    margin: 'auto auto',
-    backgroundColor: '#202124',
-  },
-}));
-
 const ButtonBar = () => {
-  const { callAccepted, callEnded, leaveCall, toggleVideo, toggleMic } = useContext(SocketContext);
-  const classes = useStyles();
+  const { callAccepted, callEnded, leaveCall, switchVideoOn, switchVideoOff, switchMicOn, switchMicOff  } = useContext(SocketContext);
   const [isMicOn, setIsMicOn] = useState(true);
   const [isVideoOn, setIsVideoOn] = useState(true);
     
   return (
-    <div className={ classes.footer }>
+    <div className="footer">
       <span style={{ display: 'absolute', margin:'0 auto'}}>
         {isMicOn ?(
-        <Button style={{backgroundColor: '#000000', color: '#FFFFFF'}} startIcon={<Mic style={{fontSize:30}}/>} onClick={() => {setIsMicOn(!isMicOn); toggleMic();}}></Button>
+        <Button style={{backgroundColor: '#000000', color: '#FFFFFF'}} startIcon={<Mic style={{fontSize:30}}/>} onClick={() => {setIsMicOn(!isMicOn); switchMicOff();}}></Button>
         ):(
-        <Button style={{backgroundColor: '#f44336', color: '#FFFFFF'}} startIcon={<MicOff style={{fontSize:30}}/>} onClick={() => {setIsMicOn(!isMicOn); toggleMic();}}></Button>
+        <Button style={{backgroundColor: '#f44336', color: '#FFFFFF'}} startIcon={<MicOff style={{fontSize:30}}/>} onClick={() => {setIsMicOn(!isMicOn); switchMicOn();}}></Button>
         )}
         {' '}
         {isVideoOn ?(
-        <Button style={{backgroundColor: '#000000', color: '#FFFFFF'}} startIcon={<Videocam style={{fontSize:30}}/>} onClick={() => {setIsVideoOn(!isVideoOn); toggleVideo();}}></Button>
+        <Button style={{backgroundColor: '#000000', color: '#FFFFFF'}} startIcon={<Videocam style={{fontSize:30}}/>} onClick={() => {setIsVideoOn(!isVideoOn); switchVideoOff();}}></Button>
         ):(
-        <Button style={{backgroundColor: '#f44336', color: '#FFFFFF'}} startIcon={<VideocamOff style={{fontSize:30}}/>} onClick={() => {setIsVideoOn(!isVideoOn); toggleVideo();}}></Button>
+        <Button style={{backgroundColor: '#f44336', color: '#FFFFFF'}} startIcon={<VideocamOff style={{fontSize:30}}/>} onClick={() => {setIsVideoOn(!isVideoOn); switchVideoOn();}}></Button>
         )}
         {' '}
         <Button style={{backgroundColor: '#000000', color: '#FFFFFF'}} startIcon={<ScreenShare style={{fontSize:30}}/>}></Button>

@@ -18,23 +18,30 @@ const ContextProvider = ({ children }) => {
   const userVideo = useRef();
   const connectionRef = useRef();
 
-  let micSwitch = true;
-  let videoSwitch = true;
+  //let micSwitch = true;
+  //let videoSwitch = true;
   
-  function toggleVideo(){
+  function switchVideoOff(){
     if(stream != null && stream.getVideoTracks().length > 0){
-      videoSwitch = !videoSwitch;
-      
-      stream.getVideoTracks()[0].enabled = videoSwitch;
+      stream.getVideoTracks()[0].enabled = false;
     }
-  
   }
   
-  function toggleMic(){
+  function switchVideoOn(){
+    if(stream != null && stream.getVideoTracks().length > 0){
+      stream.getVideoTracks()[0].enabled = true;
+    }
+  }
+
+  function switchMicOff(){
     if(stream != null && stream.getAudioTracks().length > 0){
-      micSwitch = !micSwitch;
+      stream.getAudioTracks()[0].enabled = false;
+    }  
+  }
   
-      stream.getAudioTracks()[0].enabled = micSwitch;
+  function switchMicOn(){
+    if(stream != null && stream.getAudioTracks().length > 0){
+      stream.getAudioTracks()[0].enabled = true;
     }  
   }
   
@@ -117,10 +124,10 @@ const ContextProvider = ({ children }) => {
       callUser,
       leaveCall,
       answerCall,
-      toggleVideo,
-      toggleMic,
-      micSwitch,
-      videoSwitch,
+      switchVideoOff,
+      switchVideoOn,
+      switchMicOn,
+      switchMicOff,
       declineCall
     }}>
       {children}

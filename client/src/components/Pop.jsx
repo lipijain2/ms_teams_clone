@@ -2,8 +2,6 @@ import React from 'react';
 import PopUp from "./PopUp";
 import { Button } from '@material-ui/core'
 import { ContactPhone } from '@material-ui/icons';
-import './PopUpStyles.css';
-
 
 export default class Pop extends React.Component {
   state = {

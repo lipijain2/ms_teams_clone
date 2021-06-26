@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Options from './Options';
-import './PopUpStyles.css';
 import { HighlightOff } from '@material-ui/icons';
 import { Button } from '@material-ui/core';
 

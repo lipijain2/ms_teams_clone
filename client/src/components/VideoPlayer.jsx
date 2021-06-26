@@ -6,14 +6,13 @@ import { SocketContext } from '../SocketContext'
 
 const useStyles = makeStyles((theme) => ({
     video: {
-      width: '550px',
       [theme.breakpoints.down('xs')]: {
         width: '300px',
       },
     },
     gridContainer: {
       display: 'flex',
-      position: 'fixed',
+      position: 'absolute',
       top: '100px',
       justifyContent: 'center',
       [theme.breakpoints.down('xs')]: {
@@ -39,7 +38,7 @@ const VideoPlayer = () => {
                 <Paper className={classes.paper}>
                     <Grid item>
                       <center>
-                        <Typography style={{ fontFamily: 'Courgette', textAlign: 'center', midWidth: '0'}} variant="h5" gutterBottom>{ name || 'Name' }</Typography>
+                        <Typography style={{ fontFamily: 'Courgette', textAlign: 'center', midWidth: '0'}} variant="h5" gutterBottom>{ name || 'Me' }</Typography>
                       </center>
                       <video playsInline muted ref={myVideo} autoPlay className={classes.video} />
                     </Grid>
