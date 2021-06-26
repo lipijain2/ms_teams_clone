@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import Pop from './Pop';
+import ChatPop from './ChatPop';
 import { Button } from '@material-ui/core';
 import { Mic, Videocam, MicOff, VideocamOff, PhoneDisabled, ScreenShare, Info, Chat } from '@material-ui/icons';
 
@@ -12,7 +13,7 @@ const ButtonBar = () => {
     
   return (
     <div className="footer">
-      <span style={{ display: 'absolute', margin:'0 auto'}}>
+      <span style={{ display: 'absolute', marginLeft:'13%'}}>
         {isMicOn ?(
         <Button style={{backgroundColor: '#000000', color: '#FFFFFF'}} startIcon={<Mic style={{fontSize:30}}/>} onClick={() => {setIsMicOn(!isMicOn); switchMicOff();}}></Button>
         ):(
@@ -31,12 +32,11 @@ const ButtonBar = () => {
           <Button  variant="contained" style={{backgroundColor: '#f44336', color: '#FFFFFF'}} startIcon={<PhoneDisabled style={{fontSize:30}} />} onClick={leaveCall} ></Button>
         )}  
       </span>
-      <span style={{width: '300px', align: 'right', float: 'right'}}>
+      <span style={{width: '200px', align: 'right', float: 'right'}}>
       <Pop />
       {' '}
-      <Button variant='contained' style={{backgroundColor: '#000000', color: '#FFFFFF'}} startIcon={<Info style={{fontSize:30}} />} ></Button>
+      <ChatPop />
       {' '}
-      <Button variant='contained' style={{backgroundColor: '#000000', color: '#FFFFFF'}} startIcon={<Chat style={{fontSize:30}} />} ></Button>
       </span>
     </div>
   );
