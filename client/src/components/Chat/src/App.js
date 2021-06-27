@@ -47,6 +47,13 @@ class ChatApp extends Component {
 
   constructor() {
     super();
+    this.state = JSON.parse(window.localStorage.getItem('state')) || {
+      messages: [],
+      member: {
+        username: randomName(),
+        color: randomColor(),
+      }
+    }
     this.drone = new window.Scaledrone("bV9BflM5njIqoQRS", {
       data: this.state.member
     });
@@ -63,6 +70,7 @@ class ChatApp extends Component {
       const messages = this.state.messages;
       messages.push({member, text: data});
       this.setState({messages});
+      window.localStorage.setItem('state', JSON.stringify({...this.state}));
     });
   }
 
