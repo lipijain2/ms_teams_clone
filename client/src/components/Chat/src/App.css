@@ -3,6 +3,7 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  text-align: left;
 }
 
 .App-header {
@@ -18,19 +19,22 @@
 }
 
 .Messages-list {
-  padding: 20px 0;
-  max-width: 900px;
-  width: 100%;
-  margin: 0 auto;
+  padding: 0;
+  overflow: auto;
+  max-height: 100%;
+  max-width: 400px;
+  width: 108%;
+  margin: 10px auto;
   list-style: none;
   padding-left: 0;
   flex-grow: 1;
-  overflow: auto;
 }
 
 .Messages-message {
   display: flex;
   margin-top: 10px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .Messages-message.currentMember {
@@ -64,7 +68,7 @@
 
 .Message-content > .text {
   padding: 10px;
-  max-width: 400px;
+  max-width: 250px;
   margin: 0;
   border-radius: 12px;
   background-color: cornflowerblue;
@@ -80,8 +84,11 @@ form {
   display: flex;
   width: 100%;
   justify-content: space-between;
-  max-width: 900px;
+  max-width: 330px;
   margin: 5px 15px;
+  overflow: visible;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 input {
@@ -92,6 +99,8 @@ input {
   border-radius: 8px;
   border: 1px solid rgb(22, 30, 70);
   flex-grow: 1;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 button {
