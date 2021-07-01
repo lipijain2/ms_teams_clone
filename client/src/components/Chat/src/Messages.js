@@ -14,7 +14,7 @@ class Messages extends Component {
   renderMessage(message) {
     const {member, text} = message;
     const {currentMember} = this.props;
-    const messageFromMe = member.id === currentMember.id;
+    const messageFromMe = member.clientData.username === currentMember.username;
     const className = messageFromMe ?
       "Messages-message currentMember" : "Messages-message";
     return (

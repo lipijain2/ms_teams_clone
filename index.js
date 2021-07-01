@@ -17,15 +17,20 @@ app.get('/', (req, res) => {
   res.send('Running');
 });
 
-io.on("connection", (socket) => {
-  socket.emit("me", socket.id);
+io.on('connection', function(socket) {
+  socket.on('send-username', function(username) {
+      socket.emit("me", username);
+      socket.join(username);
+      console.log(username);
+  });
 
   socket.on("disconnect", () => {
-    socket.broadcast.emit("callEnded")
+    socket.broadcast.emit("callEnded");
   });
 
   socket.on("callUser", ({ userToCall, signalData, from, name }) => {
-    io.to(userToCall).emit("callUser", { signal: signalData, from, name });
+    //console.log(userToCall);
+    socket.broadcast.to(userToCall).emit("callUser", { signal: signalData, from, name });
   });
 
   socket.on("answerCall", (data) => {

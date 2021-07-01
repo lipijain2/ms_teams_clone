@@ -4,6 +4,9 @@ import Messages from "./Messages";
 import Input from "./Input";
 import { Typography } from '@material-ui/core';
 
+const queryParams = new URLSearchParams(window.location.search);
+const userID = queryParams.get('username');
+
 function randomName() {
   const adjectives = [
     "autumn", "hidden", "bitter", "misty", "silent", "empty", "dry", "dark",
@@ -40,17 +43,19 @@ class ChatApp extends Component {
   state = {
     messages: [],
     member: {
-      username: randomName(),
+      username: this.userID,
       color: randomColor(),
     }
   }
 
   constructor() {
     super();
+    const queryParams = new URLSearchParams(window.location.search);
+    this.userID = queryParams.get('username');
     this.state = JSON.parse(window.localStorage.getItem('state')) || {
       messages: [],
       member: {
-        username: randomName(),
+        username: this.userID,
         color: randomColor(),
       }
     }
@@ -62,7 +67,8 @@ class ChatApp extends Component {
         return console.error(error);
       }
       const member = {...this.state.member};
-      member.id = this.drone.clientId;
+      //member.id = this.drone.clientId;
+      member.id = this.userID;
       this.setState({member});
     });
     const room = this.drone.subscribe("observable-room");
