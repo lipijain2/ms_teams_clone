@@ -85,3 +85,12 @@ video {
   color: rgb(0, 0, 0);
   cursor: pointer;
 }
+
+.registration {
+  border-right-width: 10px;
+}
+
+input {
+  width: 250px;
+  height: 40px;
+}
