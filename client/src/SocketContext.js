@@ -1,10 +1,11 @@
 import React, { createContext, useState, useRef, useEffect, useRouteMatch, useLocation } from 'react';
 import { io } from 'socket.io-client';
 import Peer from 'simple-peer';
+import { useHistory } from "react-router-dom";
 
 const SocketContext = createContext();
 
-const socket = io('http://localhost:5000/app');
+const socket = io('http://localhost:5000/');
 
 const ContextProvider = ({ children }) => {
   const [callAccepted, setCallAccepted] = useState(false);
@@ -15,6 +16,7 @@ const ContextProvider = ({ children }) => {
   const [me, setMe] = useState('');
 
   const location = window.location;
+  let history = useHistory();
   let myVideo = useRef();
   let userVideo = useRef();
   const connectionRef = useRef();
@@ -23,11 +25,10 @@ const ContextProvider = ({ children }) => {
   //let micSwitch = true;
   const [videoSwitch, setVideoSwitch] = useState();
   const [screenSwitch, setScreenSwitch] = useState();
-
-  const queryParams = new URLSearchParams(window.location.search);
-  const id = queryParams.get('username');
-  console.log(id);
-  socket.emit('send-username', id);
+  const username = window.localStorage.getItem("user");
+  //console.log(username);
+ 
+  socket.emit('send-username', username);
 
   function shareScreenOn() {
     navigator.mediaDevices.getDisplayMedia({ cursor: true }).then(stream => {
@@ -96,6 +97,7 @@ const ContextProvider = ({ children }) => {
       socket.on('me', (id) => setMe(id));
 
       socket.on('callUser', ({ from, name: callerName, signal }) => {
+        window.localStorage.removeItem("state");
         setCall({ isReceivingCall: true, from, name: callerName, signal });
       });
     }
@@ -129,7 +131,7 @@ const ContextProvider = ({ children }) => {
     const peer = new Peer({ initiator: true, trickle: false, stream });
 
     peer.on('signal', (data) => {
-      socket.emit('callUser', { userToCall: id, signalData: data, from: me, name });
+      socket.emit('callUser', { userToCall: id, signalData: data, from: me, name: username });
     });
 
     peer.on('stream', (currentStream) => {
@@ -137,8 +139,9 @@ const ContextProvider = ({ children }) => {
     });
 
     socket.on('callAccepted', (signal) => {
+      window.localStorage.removeItem("state");
       setCallAccepted(true);
-
+      setCall({to: id});
       peer.signal(signal);
     });
 
@@ -146,8 +149,8 @@ const ContextProvider = ({ children }) => {
   };
 
   const leaveCall = () => {
+    window.localStorage.removeItem("state");
     setCallEnded(true);
-    
     connectionRef.current.destroy();
     window.location.reload();
     

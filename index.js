@@ -52,10 +52,10 @@ app.get('/app', (req, res) => {
 });
 
 const db = mysql.createConnection({
-  user: "atreya",
+  user: "lipi",
   host: "localhost",
-  password: "Atreya@2001",
-  database: "LOGIN_SYSTEM",
+  password: "",
+  database: "msdb",
 });
 
 app.post("/register", (req, res) => {
@@ -129,11 +129,11 @@ io.on('connection', function(socket) {
 
   socket.on("callUser", ({ userToCall, signalData, from, name }) => {
     //console.log(userToCall);
-    socket.broadcast.to(userToCall).emit("callUser", { signal: signalData, from, name });
+    socket.broadcast.to(userToCall).emit("callUser", { signal: signalData, from: from, name: name });
   });
 
-  socket.on("answerCall", (data) => {
-    io.to(data.to).emit("callAccepted", data.signal)
+  socket.on("answerCall", ({data, name}) => {
+    io.to(data.to).emit("callAccepted", { signal: data.signal, to: name});
   });
 });
 

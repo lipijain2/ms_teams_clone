@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { Redirect } from 'react-router-dom';
 import Axios from "axios";
 import { Button } from '@material-ui/core';
 import "./styles.css";
-import "./css/index.css";
-import "./css/bootstrap.min.css";
 
 export default function Registration() {
+  let history = useHistory();
   const [nameReg, setNameReg] = useState("");
   const [usernameReg, setUsernameReg] = useState("");
   const [passwordReg, setPasswordReg] = useState("");
@@ -38,6 +39,10 @@ export default function Registration() {
         setLoginStatus(response.data.message);
       } else {
         setLoginStatus(response.data[0].username);
+        window.localStorage.setItem('user', response.data[0].username);
+        window.localStorage.setItem('name', response.data[0].name);
+        window.location.pathname = "/app";
+        history.push("/app");
       }
     });
   };
@@ -46,9 +51,12 @@ export default function Registration() {
     Axios.get("http://localhost:5000/login").then((response) => {
       if (response.data.loggedIn === true) {
         setLoginStatus(response.data.user[0].username);
+        console.log(response.data);
+        window.location.pathname = "/app";
+        history.push("/app");
       }
     });
-  }, []);
+  }, [history]);
 
   return (
     <div className="App">
@@ -122,11 +130,8 @@ export default function Registration() {
               </center>
             </div>
             <h1>{loginStatus}</h1>
-
           </div>
         </div>
-      <script src="js/jquery-3.5.1.min.js"></script>
-		  <script src="js/bootstrap.min.js"></script>
     </div>
   );
 }

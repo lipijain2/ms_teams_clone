@@ -39,9 +39,10 @@ const useStyles = makeStyles((theme) => ({
  }));
 
 const Options = ( { children } ) => {
-  const { me, callAccepted, name, setName, callEnded, callUser } = useContext(SocketContext);
+  const { me, callAccepted, callEnded, callUser } = useContext(SocketContext);
   const [idToCall, setIdToCall] = useState('');
   const classes = useStyles();
+  const name = window.localStorage.getItem("name");
 
   return (
     <Container className={classes.container}>
@@ -52,18 +53,17 @@ const Options = ( { children } ) => {
         <form className={classes.root} noValidate autoComplete="off">
           <Grid container className={classes.gridContainer}>
             <Grid item className={classes.padding}>
-              <Typography style= {{ display: "inline-block", padding: "10px", backgroundColor: '#212121', color: '#FFFFFF'}} gutterBottom variant="h6">Account Info</Typography>
-              <TextField label="Name" value={name} onChange={(e) => setName(e.target.value)} fullWidth />
+              <Typography style= {{ display: "inline-block", padding: "10px", backgroundColor: '#FFFFFF', color: '#000000'}} gutterBottom variant="h6">Welcome {name}</Typography>
               <CopyToClipboard text={me} className={classes.margin}>
                 <Button variant="contained" color="primary" fullWidth startIcon={<Assignment />}>
-                  Copy your ID
+                  Copy your username
                 </Button>
               </CopyToClipboard>
             </Grid>
 
             <Grid item className={classes.padding}>
               <Typography style= {{ display: "inline-block", padding: "10px", backgroundColor: '#212121', color: '#FFFFFF'}} gutterBottom variant="h6">Make a Call</Typography>
-              <TextField label="ID to Call" value={idToCall} onChange={(e) => setIdToCall(e.target.value)} fullWidth />
+              <TextField label="user to call" value={idToCall} onChange={(e) => setIdToCall(e.target.value)} fullWidth />
               {!callEnded && callAccepted ? (
                 <Button variant="contained" style={{backgroundColor: '#388e3c', color: '#FFFFFF'}}  fullWidth className={classes.margin}>
                   Connected
