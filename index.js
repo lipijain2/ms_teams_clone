@@ -132,8 +132,8 @@ io.on('connection', function(socket) {
     socket.broadcast.to(userToCall).emit("callUser", { signal: signalData, from: from, name: name });
   });
 
-  socket.on("answerCall", ({data, name}) => {
-    io.to(data.to).emit("callAccepted", { signal: data.signal, to: name});
+  socket.on("answerCall", (data) => {
+    io.to(data.to).emit("callAccepted", { signal: data.signal });
   });
 });
 

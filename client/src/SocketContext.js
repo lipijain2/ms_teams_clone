@@ -1,7 +1,6 @@
-import React, { createContext, useState, useRef, useEffect, useRouteMatch, useLocation } from 'react';
+import React, { createContext, useState, useRef, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import Peer from 'simple-peer';
-import { useHistory } from "react-router-dom";
 
 const SocketContext = createContext();
 
@@ -16,7 +15,6 @@ const ContextProvider = ({ children }) => {
   const [me, setMe] = useState('');
 
   const location = window.location;
-  let history = useHistory();
   let myVideo = useRef();
   let userVideo = useRef();
   const connectionRef = useRef();
@@ -26,9 +24,16 @@ const ContextProvider = ({ children }) => {
   const [videoSwitch, setVideoSwitch] = useState();
   const [screenSwitch, setScreenSwitch] = useState();
   const username = window.localStorage.getItem("user");
+  //let history = useHistory();
   //console.log(username);
  
   socket.emit('send-username', username);
+
+  function logout(){
+    window.localStorage.clear();
+    window.location.href = "/?logout=true";
+    //history.push("/?logout=true");
+  };
 
   function shareScreenOn() {
     navigator.mediaDevices.getDisplayMedia({ cursor: true }).then(stream => {
@@ -37,7 +42,10 @@ const ContextProvider = ({ children }) => {
       myVideo.current.srcObject = stream;
       setStream(stream);
       setScreenSwitch(true);
-      console.log(stream.getAudioTracks().length);
+      //console.log(stream.getAudioTracks().length);
+      //if(callAccepted && !callEnded){
+      //  socket.broadcast.to(call.to).emit("screenShare");
+      //}
     })
   }
 
@@ -138,7 +146,7 @@ const ContextProvider = ({ children }) => {
       userVideo.current.srcObject = currentStream;
     });
 
-    socket.on('callAccepted', (signal) => {
+    socket.on('callAccepted', ({signal,name}) => {
       window.localStorage.removeItem("state");
       setCallAccepted(true);
       setCall({to: id});
@@ -161,6 +169,7 @@ const ContextProvider = ({ children }) => {
 
   return (
     <SocketContext.Provider value={{
+      logout,
       call,
       callAccepted,
       myVideo,

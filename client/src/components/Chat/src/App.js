@@ -1,9 +1,8 @@
-import React, { Component, useContext } from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import Messages from "./Messages";
 import Input from "./Input";
 import { Typography } from '@material-ui/core';
-import {SocketContext} from "../../../SocketContext";
 
 function randomColor() {
   return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16);

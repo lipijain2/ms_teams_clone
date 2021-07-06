@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Redirect } from 'react-router-dom';
-import Axios from "axios";
 import { Button } from '@material-ui/core';
+import Axios from "axios";
 import "./styles.css";
 
 export default function Registration() {
@@ -20,7 +19,6 @@ export default function Registration() {
   Axios.defaults.withCredentials = true;
 
   const register = () => {
-    //console.log(usernameReg);
     Axios.post("http://localhost:5000/register", {
       name: nameReg,
       username: usernameReg,
@@ -29,6 +27,7 @@ export default function Registration() {
       console.log(response);
     });
   };
+  
 
   const login = () => {
     Axios.post("http://localhost:5000/login", {
@@ -47,16 +46,21 @@ export default function Registration() {
     });
   };
 
+  let logoutStatus = 'false';
+  const queryParams = new URLSearchParams(window.location.search);
+  logoutStatus = queryParams.get('logout');
+  //console.log(logoutStatus);
   useEffect(() => {
+    
     Axios.get("http://localhost:5000/login").then((response) => {
-      if (response.data.loggedIn === true) {
+      if (response.data.loggedIn === true && logoutStatus !== 'true') {
         setLoginStatus(response.data.user[0].username);
         console.log(response.data);
         window.location.pathname = "/app";
         history.push("/app");
       }
     });
-  }, [history]);
+  }, [history, logoutStatus]);
 
   return (
     <div className="App">
@@ -98,7 +102,7 @@ export default function Registration() {
               </div>
 
               <div class="form-group">
-                <button variant="contained" style={{backgroundColor: '#212121', color: '#FFFFFF', fontSize: '16px', height: '40px', width: '80px', class: "btn btn-primary"}} onClick={register}> Register </button>
+                <Button variant="contained" style={{backgroundColor: '#212121', color: '#FFFFFF', fontSize: '16px', height: '40px', width: '80px', class: "btn btn-primary"}} onClick={register}> Register </Button>
               </div>
               </center>
             </div>
@@ -125,7 +129,7 @@ export default function Registration() {
               />
               </div>
               <div class="form-group">
-                <button variant="contained" style={{backgroundColor: '#212121', color: '#FFFFFF', fontSize: '16px', height: '40px', width: '80px', class: "btn btn-primary"}} onClick={login}> Login </button>
+                <Button variant="contained" style={{backgroundColor: '#212121', color: '#FFFFFF', fontSize: '16px', height: '40px', width: '80px', class: "btn btn-primary"}} onClick={login}> Login </Button>
               </div>
               </center>
             </div>
