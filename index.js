@@ -10,6 +10,7 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 
 const bcrypt = require("bcrypt");
+const { query } = require("express");
 const saltRounds = 10;
 
 app.use(express.json());
@@ -58,6 +59,14 @@ const db = mysql.createConnection({
   database: "msdb",
 });
 
+app.get("/register", (req, res) => {
+  if (req.session.user) {
+    res.send({ registered: true, user: req.session.user });
+  } else {
+    res.send({ registered: false });
+  }
+});
+
 app.post("/register", (req, res) => {
   const name = req.body.name;
   const username = req.body.username;
@@ -67,14 +76,29 @@ app.post("/register", (req, res) => {
     if (err) {
       console.log(err);
     }
-    //console.log(hash);
     db.query(
-      "INSERT INTO users (name, username, password) VALUES (?,?,?)",
-      [name, username, hash],
-      (err, result) => {
-        console.log(err);
+      "SELECT * FROM users WHERE username = ?;",
+    username,
+    (err, result) => {
+      if (err) {
+        res.send({ err: err });
       }
-    );
+
+      if (result.length > 0) {
+          res.send({ message: "Username already in use, please try something different" });
+      } else if (username==="" || name==="" || password==="") {
+        res.send({ message: "Please fill all the details" });
+      } else {
+        console.log(username, name, hash)
+        db.query(
+        "INSERT INTO users (name, username, password) VALUES (?,?,?)",
+        [name, username, hash],
+        (err, result) => {
+          console.log(err);
+        });
+        res.send({ message: "Registered Successfully! Login to enter the app" });
+      }
+    });
   });
 });
 
@@ -124,6 +148,14 @@ io.on('connection', function(socket) {
   });
 
   socket.on("disconnect", () => {
+    //socket.broadcast.emit("callEnded");
+  });
+
+  socket.on("callDecline", () => {
+    socket.broadcast.emit("callDecline");
+  });
+
+  socket.on("callEnded", () => {
     socket.broadcast.emit("callEnded");
   });
 
