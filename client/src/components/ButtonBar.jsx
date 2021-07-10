@@ -4,6 +4,7 @@ import ChatPop from './ChatPop';
 import { Button } from '@material-ui/core';
 import { Mic, Videocam, MicOff, VideocamOff, PhoneDisabled, ScreenShare, StopScreenShare, ExitToApp } from '@material-ui/icons';
 import { SocketContext } from '../SocketContext';
+import Time from './Time';
 
 const ButtonBar = () => {
   const { logout,callAccepted, callEnded, leaveCall, switchVideoOn, switchVideoOff, switchMicOn, switchMicOff, shareScreenOn, shareScreenOff  } = useContext(SocketContext);
@@ -29,6 +30,7 @@ const ButtonBar = () => {
         startIcon={<ExitToApp style={{fontSize:30}}/>} 
         onClick={() => {logout();}}>
       </Button>
+      < Time/>
       <span style={{ display: 'absolute', marginLeft:'10%'}}>
         {isMicOn ?(
             <Button 

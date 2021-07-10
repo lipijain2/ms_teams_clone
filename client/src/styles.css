@@ -100,12 +100,13 @@ input {
 
 .Time {
   height: 500px;
-  width: 240px;
+  width: 350px;
   margin: auto;
-  position: fixed;
-  top:710px; left: 80px;
-  padding-top: 0px;
+  position: fixed; 
+  left: '100px';
+  padding-top: 10px;
   font-family: Nunito;
   color: white;
   font-size: 20px;
+
   }

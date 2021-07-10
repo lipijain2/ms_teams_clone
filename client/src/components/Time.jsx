@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 
-class Time extends Component {
+export default class Time extends Component {
     constructor(props){
         super(props);
         this.state ={
@@ -34,4 +34,3 @@ return (
 </div>
 );}
 }
-export default Time;
