@@ -6,6 +6,7 @@ import { Duo } from '@material-ui/icons';
 import VideoPlayer from './components/VideoPlayer';
 import Notifications from './components/Notifications';
 import ButtonBar from './components/ButtonBar';
+import Time from './components/Time';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -64,7 +65,8 @@ const App = () => {
       </strong></h1>
       <Notifications />
       <VideoPlayer />
-      <ButtonBar />
+      <ButtonBar /> 
+      <Time />
     </div>
   );
 }

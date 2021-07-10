@@ -109,13 +109,13 @@ const ContextProvider = ({ children }) => {
       });
 
       socket.on("callEnded", ()=>{
-        window.localStorage.removeItem("state");
+        //window.localStorage.removeItem("state");
         setCallEnded(true);
         window.location.reload();
       });
 
       socket.on('callUser', ({ from, name: callerName, signal }) => {
-        window.localStorage.removeItem("state");
+        //window.localStorage.removeItem("state");
         setCall({ isReceivingCall: true, from, name: callerName, signal });
       });
     }
@@ -157,7 +157,7 @@ const ContextProvider = ({ children }) => {
     });
 
     socket.on('callAccepted', ({signal,name}) => {
-      window.localStorage.removeItem("state");
+      //window.localStorage.removeItem("state");
       setCallAccepted(true);
       setCall({to: id});
       peer.signal(signal);
@@ -167,7 +167,7 @@ const ContextProvider = ({ children }) => {
   };
 
   const leaveCall = () => {
-    window.localStorage.removeItem("state");
+    //window.localStorage.removeItem("state");
     socket.emit("callEnded");
     setCallEnded(true);
     connectionRef.current.destroy();

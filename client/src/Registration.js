@@ -39,6 +39,7 @@ export default function Registration() {
         setLoginStatus(response.data.message);
       } else {
         setLoginStatus(response.data[0].username);
+        window.localStorage.clear();
         window.localStorage.setItem('user', response.data[0].username);
         window.localStorage.setItem('name', response.data[0].name);
         window.location.pathname = "/app";

@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Varela+Round');
 @import url('https://fonts.googleapis.com/css?family=Akaya+Kanadaka');
 @import url('https://fonts.googleapis.com/css?family=Volkhov');
+@import url('https://fonts.googleapis.com/css?family=Nunito');
 body {
   background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
     /*url(image.jpeg);*/
@@ -96,3 +97,15 @@ input {
   width: 250px;
   height: 40px;
 }
+
+.Time {
+  height: 500px;
+  width: 240px;
+  margin: auto;
+  position: fixed;
+  top:710px; left: 80px;
+  padding-top: 0px;
+  font-family: Nunito;
+  color: white;
+  font-size: 20px;
+  }

@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import AppMain from './App_main'
+import AppMain from './AppMain'
 import { ContextProvider } from './SocketContext'
 import './styles.css'
 

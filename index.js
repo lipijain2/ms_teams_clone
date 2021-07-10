@@ -53,10 +53,10 @@ app.get('/app', (req, res) => {
 });
 
 const db = mysql.createConnection({
-  user: "lipi",
-  host: "localhost",
-  password: "",
-  database: "msdb",
+  user: "sql6424032",
+  host: "sql6.freemysqlhosting.net",
+  password: "p9SvilQpGD",
+  database: "sql6424032",
 });
 
 app.get("/register", (req, res) => {

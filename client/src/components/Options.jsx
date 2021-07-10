@@ -52,12 +52,12 @@ const Options = ( { children } ) => {
     <Container className={classes.container}>
       <Paper elevation={10} className={classes.paper}>
       <AppBar className={classes.appBar} position="static" color="inherit">
-        <Typography style= {{ fontFamily: 'Courgette', backgroundColor: '#212121', color: '#FFFFFF'}} variant="h3" align="center">Welcome!</Typography>
+        <Typography style= {{ fontFamily: 'Akaya Kanadaka', backgroundColor: '#212121', color: '#FFFFFF'}} variant="h3" align="center">Welcome!</Typography>
       </AppBar>
         <form className={classes.root} noValidate autoComplete="off">
           <Grid container className={classes.gridContainer}>
             <Grid item className={classes.padding}>
-              <Typography style= {{ display: "inline-block", padding: "10px", fontFamily: 'Courgette', backgroundColor: '#212121', color: '#FFFFFF'}} gutterBottom variant="h4">{name}</Typography>
+              <Typography style= {{ display: "inline-block", padding: "10px", fontFamily: 'Akaya Kanadaka', backgroundColor: '#212121', color: '#FFFFFF'}} gutterBottom variant="h4">{name}</Typography>
               <CopyToClipboard text={me} className={classes.margin}>
                 <Button variant="contained" color="primary" fullWidth startIcon={<Assignment />}>
                   Copy your username

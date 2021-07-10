@@ -52,7 +52,7 @@ class ChatApp extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <Typography style= {{ fontFamily: 'Courgette', backgroundColor: '#212121', color: '#FFFFFF'}} variant="h3" align="center">ChatMate</Typography>
+          <Typography style= {{ fontFamily: 'Akaya Kanadaka', backgroundColor: '#212121', color: '#FFFFFF'}} variant="h3" align="center">ChatMate</Typography>
         </div>
         <Messages
           messages={this.state.messages}
