@@ -7,15 +7,13 @@ import { SocketContext } from '../SocketContext'
 const useStyles = makeStyles((theme) => ({
     video: {
       [theme.breakpoints.down('xs')]: {
-        width: '30%',
+        width: '300px',
       },
     },
     gridContainer: {
       display: 'flex',
       position: 'absolute',
       top: '100px',
-      height: '40%',
-      width: '40%',
       justifyContent: 'center',
       [theme.breakpoints.down('xs')]: {
         flexDirection: 'column',
@@ -44,7 +42,7 @@ const VideoPlayer = () => {
                 <center>
                   <Typography style={{ fontFamily: 'Volkhov', textAlign: 'center', midWidth: '0'}} variant="h5" gutterBottom>{ name || 'Me' }</Typography>
                 </center>
-                <video onContextMenu="return false;" playsInline muted ref={myVideo} autoPlay className={classes.video} style={{maxHeight: '100%', maxWidth: '100%'}}/>
+                <video onContextMenu="return false;" playsInline muted ref={myVideo} autoPlay className={classes.video} />
               </Grid>
           </Paper>
         )
@@ -90,4 +88,3 @@ const VideoPlayer = () => {
 };
 
 export default VideoPlayer;
-
