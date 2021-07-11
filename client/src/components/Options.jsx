@@ -75,7 +75,7 @@ const Options = ( { children } ) => {
               ) : (
                 <>
                 <audio className="audio-element-ring">
-                  <source src="https://ring.techbigs.download/files/new-bollywood-instrumental.mp3"></source>
+                  <source src="https://2u039f-a.akamaihd.net/downloads/ringtones/files/mp3/tring-tring-tring-9014.mp3"></source>
                 </audio>
                 <Button  variant="contained" style={{backgroundColor: '#388e3c', color: '#FFFFFF'}} startIcon={<Phone fontSize="large" />} fullWidth onClick={() => {callUser(idToCall); playRing();}} className={classes.margin}>
                   Call

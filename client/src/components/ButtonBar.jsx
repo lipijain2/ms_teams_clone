@@ -14,6 +14,7 @@ const ButtonBar = () => {
     
   return (
     <div className="footer">
+      < Time/>
       <Button 
         style={{ 
           margintop: '5px', 
@@ -30,7 +31,6 @@ const ButtonBar = () => {
         startIcon={<ExitToApp style={{fontSize:30}}/>} 
         onClick={() => {logout();}}>
       </Button>
-      < Time/>
       <span style={{ display: 'absolute', marginLeft:'10%'}}>
         {isMicOn ?(
             <Button 

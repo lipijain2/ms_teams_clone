@@ -4,8 +4,7 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 body {
   background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-    /*url(image.jpeg);*/
-    url(https://image.freepik.com/free-vector/black-wallpaper-with-motion-lines-background_1017-30151.jpg);
+    url(image.jpg);
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
@@ -100,9 +99,9 @@ input {
 
 .Time {
   height: 500px;
-  width: 350px;
+  width: 300px;
   margin: auto;
-  position: fixed; 
+  position: absolute; 
   left: '100px';
   padding-top: 10px;
   font-family: Nunito;
