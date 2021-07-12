@@ -1,17 +1,15 @@
 const express = require("express");
-//const app = require("express")();
-const app = express();
-const server = require("http").createServer(app);
 const cors = require("cors");
-const mysql = require("mysql");
-
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 
+const app = express();
+const server = require("http").createServer(app);
+const mysql = require("mysql");
 const bcrypt = require("bcrypt");
-const { query } = require("express");
 const saltRounds = 10;
+const { query } = require("express");
 
 app.use(express.json());
 app.use(
@@ -21,6 +19,7 @@ app.use(
     credentials: true,
   })
 );
+
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -36,7 +35,6 @@ app.use(
   })
 );
 
-
 const io = require("socket.io")(server, {
   cors: {
     origin: "*",
@@ -44,12 +42,10 @@ const io = require("socket.io")(server, {
   }
 });
 
-//app.use(cors());
-
 const PORT = process.env.PORT || 5000;
 
-app.get('/app', (req, res) => {
-  res.send('Running');
+app.get("/app", (req, res) => {
+  res.send("Running");
 });
 
 const db = mysql.createConnection({
@@ -78,26 +74,28 @@ app.post("/register", (req, res) => {
     }
     db.query(
       "SELECT * FROM users WHERE username = ?;",
-    username,
-    (err, result) => {
-      if (err) {
-        res.send({ err: err });
-      }
+      username,
+      (err, result) => {
+        if (err) {
+          res.send({ err: err });
+        }
 
-      if (result.length > 0) {
+        if (result.length > 0) {
           res.send({ message: "Username already in use, please try something different" });
-      } else if (username==="" || name==="" || password==="") {
-        res.send({ message: "Please fill all the details" });
-      } else {
-        console.log(username, name, hash)
-        db.query(
-        "INSERT INTO users (name, username, password) VALUES (?,?,?)",
-        [name, username, hash],
-        (err, result) => {
-          console.log(err);
-        });
-        res.send({ message: "Registered Successfully! Login to enter the app" });
-      }
+        } 
+        else if (username==="" || name==="" || password==="") {
+          res.send({ message: "Please fill all the details" });
+        } 
+        else {
+          console.log(username, name, hash)
+          db.query(
+          "INSERT INTO users (name, username, password) VALUES (?,?,?)",
+          [name, username, hash],
+          (err, result) => {
+            console.log(err);
+          });
+          res.send({ message: "Registered Successfully! Login to enter the app" });
+        }
     });
   });
 });
@@ -128,11 +126,13 @@ app.post("/login", (req, res) => {
             req.session.user = result;
             console.log(req.session.user);
             res.send(result);
-          } else {
+          } 
+          else {
             res.send({ message: "Wrong username/password combination!" });
           }
         });
-      } else {
+      } 
+      else {
         res.send({ message: "User doesn't exist" });
       }
     }
@@ -140,15 +140,11 @@ app.post("/login", (req, res) => {
 });
 
 
-io.on('connection', function(socket) {
-  socket.on('send-username', function(username) {
-      socket.emit("me", username);
-      socket.join(username);
-      console.log(username);
-  });
-
-  socket.on("disconnect", () => {
-    //socket.broadcast.emit("callEnded");
+io.on("connection", function(socket) {
+  socket.on("send-username", function(username) {
+    socket.emit("me", username);
+    socket.join(username);
+    console.log(username);
   });
 
   socket.on("callDecline", () => {
@@ -160,7 +156,6 @@ io.on('connection', function(socket) {
   });
 
   socket.on("callUser", ({ userToCall, signalData, from, name }) => {
-    //console.log(userToCall);
     socket.broadcast.to(userToCall).emit("callUser", { signal: signalData, from: from, name: name });
   });
 

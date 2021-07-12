@@ -42,53 +42,100 @@ const Options = ( { children } ) => {
   const { me, callAccepted, callEnded, callUser } = useContext(SocketContext);
   const [idToCall, setIdToCall] = useState('');
   const classes = useStyles();
-  const name = window.localStorage.getItem("name");
+  const name = window.localStorage.getItem('name');
+
   function playRing() {
-    const audioEl = document.getElementsByClassName("audio-element-ring")[0];
+    const audioEl = document.getElementsByClassName('audio-element-ring')[0];
     audioEl.play();
   }
 
   return (
-    <Container className={classes.container}>
-      <Paper elevation={10} className={classes.paper}>
-      <AppBar className={classes.appBar} position="static" color="inherit">
-        <Typography style= {{ fontFamily: 'Akaya Kanadaka', backgroundColor: '#212121', color: '#FFFFFF'}} variant="h3" align="center">Welcome!</Typography>
+    <Container className = { classes.container }>
+      <Paper elevation = {10} className={ classes.paper }>
+      <AppBar className = { classes.appBar } position='static' color='inherit'>
+        <Typography 
+          style= {{ 
+            fontFamily: 'Akaya Kanadaka', 
+            backgroundColor: '#212121', 
+            color: '#FFFFFF'}} 
+          variant='h3' 
+          align='center'>
+            Welcome!
+        </Typography>
       </AppBar>
-        <form className={classes.root} noValidate autoComplete="off">
-          <Grid container className={classes.gridContainer}>
-            <Grid item className={classes.padding}>
-              <Typography style= {{ display: "inline-block", padding: "10px", fontFamily: 'Akaya Kanadaka', backgroundColor: '#212121', color: '#FFFFFF'}} gutterBottom variant="h4">{name}</Typography>
-              <CopyToClipboard text={me} className={classes.margin}>
-                <Button variant="contained" color="primary" fullWidth startIcon={<Assignment />}>
+
+        <form className = { classes.root } noValidate autoComplete='off'>
+          <Grid container className = { classes.gridContainer }>
+            <Grid item className = { classes.padding }>
+              <Typography 
+                style = {{ 
+                  display: 'inline-block', 
+                  padding: '10px', 
+                  fontFamily: 'Akaya Kanadaka', 
+                  backgroundColor: '#212121', 
+                  color: '#FFFFFF'
+                }} 
+                gutterBottom variant='h4'>
+                {name}
+              </Typography>
+              <CopyToClipboard text = {me} className = {classes.margin}>
+                <Button variant = 'contained' color = 'primary' fullWidth startIcon = {<Assignment />}>
                   Copy your username
                 </Button>
               </CopyToClipboard>
             </Grid>
 
-            <Grid item className={classes.padding}>
-              <Typography style= {{ display: "inline-block", fontFamily:"Varela Round", padding: "10px", backgroundColor: '#212121', color: '#FFFFFF'}} gutterBottom variant="h5">Make a Call</Typography>
-              <TextField label="user to call" value={idToCall} onChange={(e) => setIdToCall(e.target.value)} fullWidth />
+            <Grid item className = { classes.padding }>
+              <Typography 
+                style = {{
+                  display: 'inline-block', 
+                  fontFamily:'Varela Round', 
+                  padding: '10px', 
+                  backgroundColor: '#212121', 
+                  color: '#FFFFFF'
+                }} 
+                gutterBottom variant = 'h5'
+                >Make a Call
+              </Typography>
+              <TextField label='user to call' value={idToCall} onChange = {(e) => setIdToCall(e.target.value)} fullWidth />
+
               {!callEnded && callAccepted ? (
-                <Button variant="contained" style={{backgroundColor: '#388e3c', color: '#FFFFFF'}}  fullWidth className={classes.margin}>
+                <Button 
+                  variant = 'contained' 
+                  style = {{
+                    backgroundColor: '#388e3c', 
+                    color: '#FFFFFF'
+                  }}  
+                  fullWidth 
+                  className = { classes.margin }>
                   Connected
                 </Button>
               ) : (
                 <>
-                <audio className="audio-element-ring">
-                  <source src="https://2u039f-a.akamaihd.net/downloads/ringtones/files/mp3/tring-tring-tring-9014.mp3"></source>
-                </audio>
-                <Button  variant="contained" style={{backgroundColor: '#388e3c', color: '#FFFFFF'}} startIcon={<Phone fontSize="large" />} fullWidth onClick={() => {callUser(idToCall); playRing();}} className={classes.margin}>
-                  Call
-                </Button>
+                  <audio className = 'audio-element-ring'>
+                    <source src='https://2u039f-a.akamaihd.net/downloads/ringtones/files/mp3/tring-tring-tring-9014.mp3'></source>
+                  </audio>
+                  <Button  
+                    variant='contained' 
+                    style = {{
+                      backgroundColor: '#388e3c', 
+                      color: '#FFFFFF'
+                    }} 
+                    startIcon = {<Phone fontSize='large' />} 
+                    fullWidth 
+                    onClick = { () => {callUser(idToCall); playRing();} } 
+                    className = { classes.margin }>
+                    Call
+                  </Button>
                 </>
-              )}
+              )};
             </Grid>
           </Grid>
           {children}
         </form>
       </Paper>
     </Container>
-  )
-}
+  );
+};
 
 export default Options;

@@ -3,7 +3,6 @@ import { io } from 'socket.io-client';
 import Peer from 'simple-peer';
 
 const SocketContext = createContext();
-
 const socket = io('http://localhost:5000/');
 
 const ContextProvider = ({ children }) => {
@@ -13,26 +12,21 @@ const ContextProvider = ({ children }) => {
   const [name, setName] = useState('');
   const [call, setCall] = useState({});
   const [me, setMe] = useState('');
+  const [videoSwitch, setVideoSwitch] = useState();
+  const [screenSwitch, setScreenSwitch] = useState();
 
-  const location = window.location;
   let myVideo = useRef();
   let userVideo = useRef();
   const connectionRef = useRef();
-  //const userStream = useRef();
-
-  //let micSwitch = true;
-  const [videoSwitch, setVideoSwitch] = useState();
-  const [screenSwitch, setScreenSwitch] = useState();
-  const username = window.localStorage.getItem("user");
-  //let history = useHistory();
-  //console.log(username);
+  
+  const location = window.location;
+  const username = window.localStorage.getItem('user');
  
   socket.emit('send-username', username);
 
-  function logout(){
+  function logout() {
     window.localStorage.clear();
-    window.location.href = "/?logout=true";
-    //history.push("/?logout=true");
+    window.location.href = '/?logout=true';
   };
 
   function shareScreenOn() {
@@ -42,23 +36,19 @@ const ContextProvider = ({ children }) => {
       myVideo.current.srcObject = stream;
       setStream(stream);
       setScreenSwitch(true);
-      //console.log(stream.getAudioTracks().length);
-      //if(callAccepted && !callEnded){
-      //  socket.broadcast.to(call.to).emit("screenShare");
-      //}
-    })
-  }
+    });
+  };
 
   function shareScreenOff() {
     stream.getTracks().forEach(track => track.stop());
     
-    if(videoSwitch){
+    if(videoSwitch) {
       navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
         const screenTrack = stream.getVideoTracks()[0];
         stream.current = screenTrack;
         myVideo.current.srcObject = stream;
         setStream(stream);
-      })
+      });
     }
     else{
       navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
@@ -67,32 +57,32 @@ const ContextProvider = ({ children }) => {
         myVideo.current.srcObject = stream;
         stream.getVideoTracks()[0].enabled = false;
         setStream(stream);
-      })
+      });
     }
     setScreenSwitch(false);
-  }
+  };
 
-  function switchVideoOff(){
+  function switchVideoOff() {
     if(!screenSwitch) stream.getVideoTracks()[0].enabled = false;
     setVideoSwitch(false);
-  }
+  };
   
-  function switchVideoOn(){
+  function switchVideoOn() {
     if(!screenSwitch) stream.getVideoTracks()[0].enabled = true;
     setVideoSwitch(true);
-  }
+  };
 
-  function switchMicOff(){
+  function switchMicOff() {
     if(stream != null && stream.getAudioTracks().length > 0){
       stream.getAudioTracks()[0].enabled = false;
     }  
-  }
+  };
   
-  function switchMicOn(){
+  function switchMicOn() {
     if(stream != null && stream.getAudioTracks().length > 0){
       stream.getAudioTracks()[0].enabled = true;
     }  
-  }
+  };
   
   useEffect(() => {
     if(location.pathname === '/app'){
@@ -104,18 +94,16 @@ const ContextProvider = ({ children }) => {
 
       socket.on('me', (id) => setMe(id));
 
-      socket.on("callDecline", ()=>{
+      socket.on('callDecline', () => {
         window.location.reload();
       });
 
-      socket.on("callEnded", ()=>{
-        //window.localStorage.removeItem("state");
+      socket.on('callEnded', () => {
         setCallEnded(true);
         window.location.reload();
       });
 
       socket.on('callUser', ({ from, name: callerName, signal }) => {
-        //window.localStorage.removeItem("state");
         setCall({ isReceivingCall: true, from, name: callerName, signal });
       });
     }
@@ -135,13 +123,13 @@ const ContextProvider = ({ children }) => {
         const screenTrack = currentStream.getTracks()[0];
         currentStream.current = screenTrack;
         userVideo.current.srcObject = currentStream;
-      } else {
+      } 
+      else {
         userVideo.current.srcObject = currentStream;
       }
     });
 
     peer.signal(call.signal);
-
     connectionRef.current = peer;
   };
 
@@ -157,7 +145,6 @@ const ContextProvider = ({ children }) => {
     });
 
     socket.on('callAccepted', ({signal,name}) => {
-      //window.localStorage.removeItem("state");
       setCallAccepted(true);
       setCall({to: id});
       peer.signal(signal);
@@ -167,20 +154,19 @@ const ContextProvider = ({ children }) => {
   };
 
   const leaveCall = () => {
-    //window.localStorage.removeItem("state");
-    socket.emit("callEnded");
+    socket.emit('callEnded');
     setCallEnded(true);
     connectionRef.current.destroy();
     window.location.reload();
-    
   };
+
   const declineCall = () => {
-    socket.emit("callDecline");
+    socket.emit('callDecline');
     window.location.reload();
-  }
+  };
 
   return (
-    <SocketContext.Provider value={{
+    <SocketContext.Provider value = {{
       logout,
       call,
       callAccepted,

@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Akaya+Kanadaka');
 @import url('https://fonts.googleapis.com/css?family=Volkhov');
 @import url('https://fonts.googleapis.com/css?family=Nunito');
+
 body {
   background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
     url(image.jpg);
@@ -47,7 +48,7 @@ video {
   border-radius: 15px;
   position: absolute;
   top: -550px;
-  flex-direction: 'row';
+  flex-direction: row;
   right: 10px;
   width: 360px;
   float: right;
@@ -60,7 +61,7 @@ video {
   position: fixed;
   top: 0;
   height: 92%;
-  flex-direction: 'row';
+  flex-direction: row;
   right: 10px;
   width: 360px;
   float: right;
@@ -99,13 +100,12 @@ input {
 
 .Time {
   height: 500px;
-  width: 300px;
+  width: 200px;
   margin: auto;
   position: absolute; 
-  left: '100px';
+  left: 100px;
   padding-top: 10px;
   font-family: Nunito;
   color: white;
   font-size: 20px;
-
-  }
+}
